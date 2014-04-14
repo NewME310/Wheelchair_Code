@@ -68,6 +68,7 @@ void setup(){
   if(LEO & DEBUG)
     while (!Serial)
     {
+      //flashes onboard LED while waiting for serial
       digitalWrite(13,HIGH);
       delay(50);
       digitalWrite(13,LOW);
@@ -112,11 +113,15 @@ void loop(){
   {
     Serial.println("Shock experienced!");
     shockFlag = 0;
+    adxl.getInterruptSource();
+    digitalWrite(13,LOW);
   }
   if(fallFlag == 1)
   {
     Serial.println("Fall experienced!");
     fallFlag = 0;
+    adxl.getInterruptSource();
+    digitalWrite(13,LOW);
   }
 
   delay(100); 
@@ -183,6 +188,8 @@ void tap(void){
 //interrupt response for free fall
 void ff_int_response()
 {
+    //flash LED
+    digitalWrite(13,HIGH);
     //code to read INT_SOURCE (?)
     fallFlag = 1;  
 }
@@ -190,6 +197,8 @@ void ff_int_response()
 //interrupt response for shock
 void shock_int_response()
 {
+    //flash LED
+    digitalWrite(13,HIGH);
     //code to read INT_SOURCE (?)
     shockFlag = 1;  
 }
