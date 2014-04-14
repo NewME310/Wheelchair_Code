@@ -30,9 +30,9 @@
 #define CS 10 //Assign the Chip Select signal to pin 10.
 
 //interrupt pins on Leonardo:
-#define SHOCK_PIN 0 //interrupt for shock on pin 0 (int.2)
+#define SHOCK_PIN 0 //interrupt for shock on pin 0 (int.2) - INT2 on ADXL345
 #define SHOCK_ISR 2
-#define FF_PIN 1 //interrupt for free fall on pin 1 (int.3)
+#define FF_PIN 1 //interrupt for free fall on pin 1 (int.3) - INT1 on ADXL345
 #define FF_ISR 3
 
 #define DEBUG 1
@@ -52,6 +52,8 @@ int x,y,z;
 double xg, yg, zg;
 char tapType=0;
 
+boolean shockFlag = 0;
+boolean fallFlag = 0;
 
 //********** functions **********
 //Arduino setup()
@@ -105,6 +107,17 @@ void loop(){
   Serial.println(z, DEC);
     
   //Serial.println(sqrt(x*x + y*y + z*z));
+
+  if(shockFlag == 1)
+  {
+    Serial.println("Shock experienced!");
+    shockFlag = 0;
+  }
+  if(fallFlag == 1)
+  {
+    Serial.println("Fall experienced!");
+    fallFlag = 0;
+  }
 
   delay(100); 
 }
@@ -171,14 +184,14 @@ void tap(void){
 void ff_int_response()
 {
     //code to read INT_SOURCE (?)
-  
+    fallFlag = 1;  
 }
 
 //interrupt response for shock
 void shock_int_response()
 {
     //code to read INT_SOURCE (?)
-  
+    shockFlag = 1;  
 }
 
 
