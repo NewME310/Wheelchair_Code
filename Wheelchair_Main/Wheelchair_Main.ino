@@ -21,9 +21,9 @@
 //Free Fall threshold: 300m(g) to 600m(g) recommended
 #define FALL_THRESH 0x09 //recommended value                                    <-- needs to be adjusted
 //Free Fall duration: minimum time for free fall, 100ms to 350ms recommended
-#define FALL_DUR 0x46 //350ms                                                  <-- needs to be adjusted
+#define FALL_DUR 0x14 //350ms                                                  <-- needs to be adjusted
 //Shock threshold: minimum acceleration value set in THRESH_TAP register, 62.5m(g)/LSB
-#define SHOCK_THRESH 127 //half of 0xFF?                                         <-- needs to be adjusted
+#define SHOCK_THRESH 0xE0 //arbitrary                                           <-- needs to be adjusted
 //Shock duration: maximum time that an event exceeds SHOCK_THRESH to qualify as a tap
 #define SHOCK_DUR 20 //12.5 ms                                                  <-- needs to be adjusted
 
