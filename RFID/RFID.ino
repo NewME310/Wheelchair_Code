@@ -21,7 +21,7 @@
  and the XBee port.
  
  06/04/2013 - Modified for compatibility with Arudino 1.0. Seb Madgwick.
- 
+ a
  */
 #include <SoftwareSerial.h>
 
@@ -35,7 +35,9 @@ const int CHARLES=0x5A;
 const int DIANA=0xC0;
 const int ELTON=0x00;
 
-
+#define INDICATOR_PIN         13   //Pin for indicator LED
+#define INDICATOR_DURATION    700  //duration of indicator
+unsigned long indicator_time = -1;
 
 //Prototypes
 //void check_for_notag(void);
@@ -61,6 +63,9 @@ void setup()
     ;
   }
 
+  pinMode(INDICATOR_PIN,OUTPUT);
+  digitalWrite(INDICATOR_PIN,LOW);
+
   delay(10);
   halt();
   Serial.println("Start");
@@ -70,6 +75,7 @@ void setup()
 void loop()
 {
   read_serial();
+  checkIndicator();
 }
 
 //void check_for_notag()
@@ -112,6 +118,7 @@ void parse()
 void print_serial()
 {
   if(flag == 1){
+    indicatorOn();
     //print to serial port
 //    Serial.print(Str1[8], HEX);
 //    Serial.print(Str1[7], HEX);
@@ -204,5 +211,15 @@ void set_flag()
   }
 }
 
+void indicatorOn()
+{
+  indicator_time = millis();
+  digitalWrite(INDICATOR_PIN,HIGH);
+}
 
-
+//determine if indicator light should be turned off
+void checkIndicator()
+{
+  if((unsigned long)(millis() - indicator_time) > INDICATOR_DURATION && indicator_time != -1)
+    digitalWrite(INDICATOR_PIN,LOW);
+}
