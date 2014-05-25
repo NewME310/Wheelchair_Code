@@ -29,11 +29,17 @@
 
 #define CS 10 //Assign the Chip Select signal to pin 10.
 
+//interrupt pins on Uno:
+#define SHOCK_PIN 2 //interrupt for shock on pin 2 (int.0) - INT2 on ADXL345
+#define SHOCK_ISR 0
+#define FF_PIN 3 //interrupt for free fall on pin 3 (int.1) - INT1 on ADXL345
+#define FF_ISR 1
+
 //interrupt pins on Leonardo:
-#define SHOCK_PIN 0 //interrupt for shock on pin 0 (int.2) - INT2 on ADXL345
-#define SHOCK_ISR 2
-#define FF_PIN 1 //interrupt for free fall on pin 1 (int.3) - INT1 on ADXL345
-#define FF_ISR 3
+//#define SHOCK_PIN 0 //interrupt for shock on pin 0 (int.2) - INT2 on ADXL345
+//#define SHOCK_ISR 2
+//#define FF_PIN 1 //interrupt for free fall on pin 1 (int.3) - INT1 on ADXL345
+//#define FF_ISR 3
 
 #define DEBUG 1
 #define LEO 1
