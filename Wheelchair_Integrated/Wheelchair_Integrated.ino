@@ -1,6 +1,6 @@
 /**
 *  ME 310 - Team Embraer '13-'14
-*  Code for the Wheelchair-side system
+*  Code for the Wheelchair-side system: integrated RFID and accelerometer
 *  Accelerometer code adapted from https://www.sparkfun.com/tutorials/240
 *  Cliff Bargar, 4/25/14
 */
