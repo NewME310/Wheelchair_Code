@@ -173,14 +173,14 @@ void loop(){
     Serial.println("Shock experienced!");
     shockFlag = 0;
     adxl.getInterruptSource();
-    digitalWrite(13,LOW);
+    //digitalWrite(13,LOW);
   }
   if(fallFlag == 1)
   {
     Serial.println("Fall experienced!");
     fallFlag = 0;
     adxl.getInterruptSource();
-    digitalWrite(13,LOW);
+    //digitalWrite(13,LOW);
   }
 
   delay(100); 
@@ -249,18 +249,20 @@ void tap(void){
 void ff_int_response()
 {
     //flash LED
-    digitalWrite(13,HIGH);
+    //digitalWrite(13,HIGH);
     //code to read INT_SOURCE (?)
     fallFlag = 1;  
+    indicatorOn();
 }
 
 //interrupt response for shock
 void shock_int_response()
 {
     //flash LED
-    digitalWrite(13,HIGH);
+    //digitalWrite(13,HIGH);
     //code to read INT_SOURCE (?)
-    shockFlag = 1;  
+    shockFlag = 1;   
+    indicatorOn();
 }
 
 //RFID helper functions
