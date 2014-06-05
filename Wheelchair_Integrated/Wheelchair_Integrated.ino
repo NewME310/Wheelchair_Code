@@ -68,6 +68,9 @@
 #define DIANA 0xC0
 #define ELTON 0x00
 
+#define RODRIGO 0x5A
+#define LUIZ 0xD0
+
 //********** module variables **********
 //***Accel***
 //This buffer will hold values read from the ADXL345 registers.
@@ -161,17 +164,18 @@ void loop(){
   //The Z value is stored in values[4] and values[5].
   z = values[2];
     
-  Serial.print(x, DEC);
-  Serial.print(',');
-  Serial.print(y, DEC);
-  Serial.print(',');
-  Serial.println(z, DEC);
+//  Serial.print(x, DEC);
+//  Serial.print(',');
+//  Serial.print(y, DEC);
+//  Serial.print(',');
+//  Serial.println(z, DEC);
     
   //Serial.println(sqrt(x*x + y*y + z*z));
 
   if(shockFlag == 1)
   {
     Serial.println("Shock experienced!");
+    xbee.println("Shock");
     shockFlag = 0;
     adxl.getInterruptSource();
     //digitalWrite(13,LOW);
@@ -264,6 +268,7 @@ void shock_int_response()
     //code to read INT_SOURCE (?)
     shockFlag = 1;   
     indicatorOn();
+    indicator_time += INDICATOR_DURATION/2;
 }
 
 //RFID helper functions
@@ -301,14 +306,14 @@ void print_serial()
 //    Serial.print(Str1[5], HEX);
 //    Serial.println();
     //tagid=Str1[8]+Str1[7]+Str1[6]+Str1[5]
-//    print_handler();
+    print_handler();
  
     //print to XBee module
-    xbee.print(Str1[8], HEX);
-    xbee.print(Str1[7], HEX);
-    xbee.print(Str1[6], HEX);
-    xbee.print(Str1[5], HEX);
-    xbee.println();
+//    xbee.print(Str1[8], HEX);
+//    xbee.print(Str1[7], HEX);
+//    xbee.print(Str1[6], HEX);
+//    xbee.print(Str1[5], HEX);
+//    xbee.println();
     delay(100);
     //check_for_notag();
   }
@@ -320,14 +325,14 @@ void print_handler()
   {
     Serial.println("Albert is now handling your wheelchair");
   } 
-  else if (Str1[5]==BOB)
-  {
-    Serial.println("Bob is now handling your wheelchair");
-  } 
-  else if (Str1[5]==CHARLES)
-  {
-    Serial.println("Charles is now handling your wheelchair");
-  } 
+//  else if (Str1[5]==BOB)
+//  {
+//    Serial.println("Bob is now handling your wheelchair");
+//  } 
+//  else if (Str1[5]==CHARLES)
+//  {
+//    Serial.println("Charles is now handling your wheelchair");
+//  } 
   else if (Str1[5]==DIANA)
   {
     Serial.println("Diana is now handling your wheelchair");
@@ -335,6 +340,16 @@ void print_handler()
   else if (Str1[5]==ELTON)
   {
     Serial.println("Elton is now handling your wheelchair");
+  } 
+  else if (Str1[5] == LUIZ)
+  {
+    Serial.println("Luiz");
+    xbee.println("Luiz D."); 
+  }
+  else if (Str1[5] == RODRIGO)
+  {
+    Serial.println("Rodrigo");
+    xbee.println("Rodrigo M."); 
   } 
   else 
   {

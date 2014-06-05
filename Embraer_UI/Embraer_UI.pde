@@ -5,6 +5,10 @@ PImage logo;
 
 String lastHandler = "Handler";
 String lastTime = "Time";
+
+boolean shockFlag = false;
+int shockTime = 0;
+int SHOCK_DURATION = 1000;
  
 import processing.serial.*;
  
@@ -46,11 +50,17 @@ void draw() {
   fill(6,75,160);
   textFont(f,40);
   text(lastTime,100,420);
-//  while(true) ;
-//  while(myPort.available() == 0 );
-//  drawType(width * 0.33);
-//  textAlign(LEFT);
-//  drawType(width * 0.66);
+  
+  //Accelerometer
+  if(shockFlag)
+  {
+    textFont(f,55);
+    fill(255,0,0);
+    textAlign(CENTER);
+    text("Wheelchair bumped!",900,400);
+    if(millis() > shockTime + SHOCK_DURATION)
+      shockFlag = false; 
+  }
 }
 
 
@@ -63,11 +73,18 @@ void serialEvent (Serial myPort)
    {
      print(inString);
      
-     if(inString == "Luiz" || inString == "Rodrigo")
+     if(inString.indexOf("Luiz") != -1 || inString.indexOf("Rodrigo") != -1)
      {
        lastHandler = inString;
        lastTime = str(hour()) + ":" + str(minute()) + ":" + str(second()); 
+       print("Update");
 //        lastTime = concat(concat(str(minute()),":"));
+     }
+     
+     else if(inString.indexOf("Shock") != -1)
+     {
+        shockFlag = true;
+        shockTime = millis();
      }
     
 
