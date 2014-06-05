@@ -135,6 +135,7 @@ void setup(){
   initAccel();
   
   //initialize XBee?
+  xbee.println("initialized");
  
 }
 
